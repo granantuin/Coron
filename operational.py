@@ -333,16 +333,40 @@ cols_to_drop = df_prob[:24].columns[df_prob[:24].apply(lambda x: x <= 0.05).all(
 df_prob.drop(cols_to_drop, axis=1, inplace=True)
 df_prob[:24].columns = pd.CategoricalIndex(df_prob.columns[:24], ordered=True)
 
-#Show results
+#Show results day 0
 fig, ax = plt.subplots()
-#sns.set(rc={'figure.figsize':(8,6)})
 sns.heatmap(df_prob[:24], annot=True, cmap='coolwarm',
             linewidths=.2, linecolor='black',fmt='.0%',ax=ax)
 ax.set_title("Wind direction probabilities intervals")
 st.pyplot(fig)
 
+#@title wind direction probabilities day 1
+# Find the columns where all values are less than or equal to 5%
+cols_to_drop = df_prob[24:48].columns[df_prob[24:48].apply(lambda x: x <= 0.05).all()]
+df_prob.drop(cols_to_drop, axis=1, inplace=True)
+fig, ax = plt.subplots()
+sns.heatmap(df_prob[24:48], annot=True, cmap='coolwarm',
+            linewidths=.2, linecolor='black',fmt='.0%',ax=ax)
+ax.set_title("Wind direction probabilities intervals")
+st.pyplot(fig)
 
+#@title wind direction probabilities day 2
+# Find the columns where all values are less than or equal to 5%
+cols_to_drop = df_prob[48:72].columns[df_prob[24:48].apply(lambda x: x <= 0.05).all()]
+df_prob.drop(cols_to_drop, axis=1, inplace=True)
+fig, ax = plt.subplots()
+sns.heatmap(df_prob[24:48], annot=True, cmap='coolwarm',
+            linewidths=.2, linecolor='black',fmt='.0%',ax=ax)
+ax.set_title("Wind direction probabilities intervals")
+st.pyplot(fig)
 
-
-
+#@title wind direction probabilities day 3
+# Find the columns where all values are less than or equal to 5%
+cols_to_drop = df_prob[72:96].columns[df_prob[24:48].apply(lambda x: x <= 0.05).all()]
+df_prob.drop(cols_to_drop, axis=1, inplace=True)
+fig, ax = plt.subplots()
+sns.heatmap(df_prob[24:48], annot=True, cmap='coolwarm',
+            linewidths=.2, linecolor='black',fmt='.0%',ax=ax)
+ax.set_title("Wind direction probabilities intervals")
+st.pyplot(fig)
 
