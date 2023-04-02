@@ -13,6 +13,7 @@ from sklearn.metrics import mean_absolute_error
 from datetime import timedelta
 from sklearn.metrics import accuracy_score
 import sklearn
+import seaborn as sns
 
 def get_meteogalicia_model_4Km(coorde):
     """
@@ -314,5 +315,34 @@ plt.title("Wind direction mean hour before day=3 (intervals)\nAccuracy meteorolo
 #plt.yticks(np.arange(0,len(labels_d)),labels_d)
 plt.grid(True, which = "both", axis = "both")
 st.pyplot(fig)
+
+#@title wind direction probabilities day 0
+
+#probabilistic results
+prob = (np.concatenate((algo_d0["pipe"].predict_proba(model_x_var_d0),
+                        algo_d1["pipe"].predict_proba(model_x_var_d1),
+                        algo_d2["pipe"].predict_proba(model_x_var_d2),
+                        algo_d3["pipe"].predict_proba(model_x_var_d3)),
+                       axis =0)).transpose()
+df_prob = pd.DataFrame(prob,index = (algo_d0["pipe"].classes_ )).T
+df_prob = df_prob[labels_d]
+df_prob.index = meteo_model[:96].index.strftime('%b %d %H:%M Z')
+
+# Find the columns where all values are less than or equal to 5%
+cols_to_drop = df_prob[:24].columns[df_prob[:24].apply(lambda x: x <= 0.05).all()]
+df_prob.drop(cols_to_drop, axis=1, inplace=True)
+df_prob[:24].columns = pd.CategoricalIndex(df_prob.columns[:24], ordered=True)
+
+#Show results
+fig, ax = plt.subplots()
+#sns.set(rc={'figure.figsize':(8,6)})
+sns.heatmap(df_prob[:24], annot=True, cmap='coolwarm',
+            linewidths=.2, linecolor='black',fmt='.0%',ax=ax)
+ax.set_title("Wind direction probabilities intervals")
+st.pyplot(fig)
+
+
+
+
 
 
