@@ -701,9 +701,9 @@ df_prob.index = meteo_model[:96].index.strftime('%b %d %H:%M Z')
 # Find the columns where all values are less than or equal to 5%
 cols_to_drop = df_prob[:24].columns[df_prob[:24].apply(lambda x: x <= 0.01).all()]
 df_prob.drop(cols_to_drop, axis=1, inplace=True)
-
+fig, ax = plt.subplots()
 sns.heatmap(df_prob[:24], annot=True, cmap='coolwarm',
-            linewidths=.2, linecolor='black',fmt='.0%')
+            linewidths=.2, linecolor='black',fmt='.0%',ax=ax)
 plt.title('Rain probability')
 st.pyplot(fig)
 
@@ -712,9 +712,9 @@ st.pyplot(fig)
 # Find the columns where all values are less than or equal to 5%
 cols_to_drop = df_prob[24:48].columns[df_prob[24:48].apply(lambda x: x <= 0.01).all()]
 df_prob.drop(cols_to_drop, axis=1, inplace=True)
-
+fig, ax = plt.subplots()
 sns.heatmap(df_prob[24:48], annot=True, cmap='coolwarm',
-            linewidths=.2, linecolor='black',fmt='.0%')
+            linewidths=.2, linecolor='black',fmt='.0%',ax=ax)
 plt.title('Rain probability')
 st.pyplot(fig)
 
@@ -724,9 +724,9 @@ st.pyplot(fig)
 # Find the columns where all values are less than or equal to 5%
 cols_to_drop = df_prob[48:72].columns[df_prob[48:72].apply(lambda x: x <= 0.01).all()]
 df_prob.drop(cols_to_drop, axis=1, inplace=True)
-
+fig, ax = plt.subplots()
 sns.heatmap(df_prob[48:72], annot=True, cmap='coolwarm',
-            linewidths=.2, linecolor='black',fmt='.0%')
+            linewidths=.2, linecolor='black',fmt='.0%',ax=ax)
 plt.title('Rain probability')
 st.pyplot(fig)
 
@@ -737,9 +737,9 @@ st.pyplot(fig)
 # Find the columns where all values are less than or equal to 5%
 cols_to_drop = df_prob[72:96].columns[df_prob[72:96].apply(lambda x: x <= 0.01).all()]
 df_prob.drop(cols_to_drop, axis=1, inplace=True)
-
+fig, ax = plt.subplots()
 sns.heatmap(df_prob[72:96], annot=True, cmap='coolwarm',
-            linewidths=.2, linecolor='black',fmt='.0%')
+            linewidths=.2, linecolor='black',fmt='.0%',ax=ax)
 plt.title('Rain probability')
 st.pyplot(fig)
 
