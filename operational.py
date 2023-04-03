@@ -16,7 +16,7 @@ import sklearn
 import seaborn as sns
 
 st.set_page_config(page_title="Corón Machine Learning forecast",layout="wide")
-st.write("**All times UTC**")
+st.write("## **All times UTC**")
 
 def get_meteogalicia_model_4Km(coorde):
     """
@@ -498,7 +498,54 @@ plt.title("Wind speed mean hour before day=3 (Beaufort)\nAccuracy meteorologic m
 plt.grid(True, which = "both", axis = "both")
 st.pyplot(fig)
 
+#Show results day 0
+fig, ax = plt.subplots()
+sns.heatmap(df_prob[:24], annot=True, cmap='coolwarm',
+            linewidths=.2, linecolor='black',fmt='.0%',ax=ax)
+ax.set_title("Wind intensity Beaufort probabilities")
+st.pyplot(fig)
 
+# Find the columns where all values are less than or equal to 5%
+cols_to_drop = df_prob[24:48].columns[df_prob[24:48].apply(lambda x: x <= 0.05).all()]
+df_prob.drop(cols_to_drop, axis=1, inplace=True)
+fig, ax = plt.subplots()
+sns.heatmap(df_prob[24:48], annot=True, cmap='coolwarm',
+            linewidths=.2, linecolor='black',fmt='.0%',ax=ax)
+ax.set_title("Wind intensity Beaufort probabilities")
+st.pyplot(fig)
+
+#@title wind direction probabilities day 2
+# Find the columns where all values are less than or equal to 5%
+cols_to_drop = df_prob[48:72].columns[df_prob[48:72].apply(lambda x: x <= 0.05).all()]
+df_prob.drop(cols_to_drop, axis=1, inplace=True)
+fig, ax = plt.subplots()
+sns.heatmap(df_prob[48:72], annot=True, cmap='coolwarm',
+            linewidths=.2, linecolor='black',fmt='.0%',ax=ax)
+ax.set_title("Wind intensity Beaufort probabilities")
+st.pyplot(fig)
+
+#@title wind direction probabilities day 3
+# Find the columns where all values are less than or equal to 5%
+cols_to_drop = df_prob[72:96].columns[df_prob[72:96].apply(lambda x: x <= 0.05).all()]
+df_prob.drop(cols_to_drop, axis=1, inplace=True)
+fig, ax = plt.subplots()
+sns.heatmap(df_prob[72:96], annot=True, cmap='coolwarm',
+            linewidths=.2, linecolor='black',fmt='.0%',ax=ax)
+ax.set_title("Wind intensity Beaufort probabilities")
+st.pyplot(fig)
+
+
+
+
+#global results
+st.write("#### **Global results**")
+st.write("Better meteorological model outcome: {}".format(score_wrf))
+st.write(best_wrf)
+st.write("Better machine learning outcome: {}".format(score_ml))
+st.write(best_ml)
+
+
+st.write("Project [link](https://github.com/granantuin/Coron)")
 
 
 
