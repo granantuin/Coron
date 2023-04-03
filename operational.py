@@ -15,6 +15,9 @@ from sklearn.metrics import accuracy_score
 import sklearn
 import seaborn as sns
 
+st.set_page_config(page_title="Corón Machine Learning forecast",layout="wide")
+st.write("**All times UTC**")
+
 def get_meteogalicia_model_4Km(coorde):
     """
     get meteogalicia model (4Km) from algo coordenates
@@ -369,4 +372,134 @@ sns.heatmap(df_prob[72:96], annot=True, cmap='coolwarm',
             linewidths=.2, linecolor='black',fmt='.0%',ax=ax)
 ax.set_title("Wind direction probabilities intervals")
 st.pyplot(fig)
+
+
+#@title wind speed Beaufort
+
+
+#load algorithm file 
+algo_d0 = pickle.load(open("algorithms/spd_coron_d0.al","rb"))
+algo_d1 = pickle.load(open("algorithms/spd_coron_d1.al","rb"))
+algo_d2 = pickle.load(open("algorithms/spd_coron_d2.al","rb"))
+algo_d3 = pickle.load(open("algorithms/spd_coron_d3.al","rb"))
+
+
+#select x _var
+model_x_var_d0 = meteo_model[:24][algo_d0["x_var"]]
+model_x_var_d1 = meteo_model[24:48][algo_d1["x_var"]]
+model_x_var_d2 = meteo_model[48:72][algo_d2["x_var"]]
+model_x_var_d3 = meteo_model[72:96][algo_d3["x_var"]]
+
+#forecast machine learning wind speed beaufort
+spd_ml_d0 = algo_d0["pipe"].predict(model_x_var_d0)
+spd_ml_d1 = algo_d1["pipe"].predict(model_x_var_d1)
+spd_ml_d2 = algo_d2["pipe"].predict(model_x_var_d2)
+spd_ml_d3 = algo_d2["pipe"].predict(model_x_var_d3)
+
+
+#compare results
+df_mod=pd.DataFrame({"time":meteo_model[:96].index,
+                      "ML_spd": np.concatenate((spd_ml_d0,spd_ml_d1,spd_ml_d2,spd_ml_d3),axis=0),
+                      "WRF_spd1": meteo_model.mod1})
+labels = ["F0","F1","F2","F3","F4","F5","F6","F7","F8","F9","F10","F11","F12"]
+interval = pd.IntervalIndex.from_tuples([(-1, 0.5), (.5, 1.5), (1.5, 3.3),(3.3,5.5),
+                                     (5.5,8),(8,10.7),(10.7,13.8),(13.8,17.1),
+                                     (17.1,20.7),(20.7,24.4),(24.4,28.4),(28.4,32.6),(32.6,60)])
+
+
+
+
+df_mod["spd1_l"] = pd.cut(df_mod["WRF_spd1"], bins = interval,retbins=False,
+                        labels = labels_d).map({a:b for a,b in zip(interval,labels)}).astype('category')          
+
+
+#get actual wind dir
+r_spd = requests.get("https://servizos.meteogalicia.gal/mgrss/observacion/ultimosHorariosEstacions.action?idEst=10085&idParam=VV_AVG_10m&numHoras=36")
+json_data = json.loads(r_spd.content)
+
+spd_o, time = [],[]
+for c in json_data["listHorarios"]:
+  for c1 in c['listaInstantes']:
+    time.append(c1['instanteLecturaUTC'])  
+    spd_o.append(c1['listaMedidas'][0]["valor"])
+
+df_st = pd.DataFrame(np.array(spd_o),columns=["spd_o"],index= time)  
+df_st.index = pd.to_datetime(df_st.index )
+
+#label observed speed
+df_st["spd_o_l"] = pd.cut(df_st["spd_o"], bins = interval,retbins=False,
+                        labels = labels_d).map({a:b for a,b in zip(interval,labels)}).astype('category')
+
+
+df_res = pd.concat([df_mod.set_index("time"),df_st],axis=1).dropna()
+acc_ml = round(accuracy_score(df_res["spd_o_l"],df_res["ML_spd"]),2)
+acc_wrf = round(accuracy_score(df_res["spd_o_l"],df_res["spd1_l"]),2)
+
+if acc_ml < acc_wrf:
+  score_wrf+=1
+if acc_ml > acc_wrf:  
+  score_ml+=1
+
+#show results wind direction
+fig, ax = plt.subplots(figsize=(10,6))
+plt.plot(df_res.index, df_res['ML_spd'], marker="^", color="b",markersize=16, 
+         markerfacecolor='w', linestyle='')
+plt.plot(df_res.index, df_res['spd_o_l'], marker="*", color="g",markersize=10, 
+         markerfacecolor='g', linestyle='')
+plt.plot(df_res.index, df_res['spd1_l'], color="r",marker="v", markersize=16,
+         markerfacecolor='w', linestyle='');
+plt.grid(True)
+plt.legend(('Ml_spd', 'Observed_spd',"WRF_spd"),)
+plt.title("Wind speed mean hour before (Beaufort)\nActual accuracy meteorologic model (point 0): {:.0%}. Reference: 36%\nActual accuracy machine learning: {:.0%}. Reference: 42%".format(acc_wrf,acc_ml))            
+st.pyplot(fig)
+
+
+#forecast d0
+fig, ax = plt.subplots(figsize=(10,6))
+plt.plot(df_mod["time"][:24], df_mod['ML_spd'][:24], marker="^", color="b",markersize=8, 
+         markerfacecolor='w', linestyle='')
+plt.plot(df_mod["time"][:24], df_mod['spd1_l'][:24], color="r",marker="v", markersize=8,
+         markerfacecolor='w', linestyle='');
+plt.legend(('Ml_spd','WRF_spd'),)
+plt.title("Wind speed mean hour before day=0 (Beaufort)\nAccuracy meteorologic model (point 0): 36%\nAccuracy machine learning: 42%")
+plt.grid(True, which = "both", axis = "both")
+st.pyplot(fig)
+
+#forecast d1
+fig, ax = plt.subplots(figsize=(10,6))
+plt.plot(df_mod["time"][24:48], df_mod['ML_spd'][24:48], marker="^", color="b",markersize=8, 
+         markerfacecolor='w', linestyle='')
+plt.plot(df_mod["time"][24:48], df_mod['spd1_l'][24:48], color="r",marker="v", markersize=8,
+         markerfacecolor='w', linestyle='');
+plt.legend(('Ml_spd','WRF_spd'),)
+plt.title("Wind speed mean hour before day=1 (Beaufort)\nAccuracy meteorologic model (point 0): 34%\nAccuracy machine learning: 43%")
+plt.grid(True, which = "both", axis = "both")
+st.pyplot(fig)
+
+#forecast d2
+fig, ax = plt.subplots(figsize=(10,6))
+plt.plot(df_mod["time"][48:72], df_mod['ML_spd'][48:72], marker="^", color="b",markersize=8, 
+         markerfacecolor='w', linestyle='')
+plt.plot(df_mod["time"][48:72], df_mod['spd1_l'][48:72], color="r",marker="v", markersize=8,
+         markerfacecolor='w', linestyle='');
+plt.legend(('Ml_spd','WRF_spd'),)
+plt.title("Wind speed mean hour before day=2 (Beaufort)\nAccuracy meteorologic model (point 0): 32%\nAccuracy machine learning: 38%")
+plt.grid(True, which = "both", axis = "both")
+st.pyplot(fig)
+
+#forecast d3
+fig, ax = plt.subplots(figsize=(10,6))
+plt.plot(df_mod["time"][72:96], df_mod['ML_spd'][72:96], marker="^", color="b",markersize=8, 
+         markerfacecolor='w', linestyle='')
+plt.plot(df_mod["time"][72:96], df_mod['spd1_l'][72:96], color="r",marker="v", markersize=8,
+         markerfacecolor='w', linestyle='');
+plt.legend(('Ml_spd','WRF_spd'),)
+plt.title("Wind speed mean hour before day=3 (Beaufort)\nAccuracy meteorologic model (point 0): 31%\nAccuracy machine learning: 36%")
+plt.grid(True, which = "both", axis = "both")
+st.pyplot(fig)
+
+
+
+
+
 
