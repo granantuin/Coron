@@ -498,6 +498,17 @@ plt.title("Wind speed mean hour before day=3 (Beaufort)\nAccuracy meteorologic m
 plt.grid(True, which = "both", axis = "both")
 st.pyplot(fig)
 
+#@title wind speed probabilities day 0
+
+prob = (np.concatenate((algo_d0["pipe"].predict_proba(model_x_var_d0),
+                        algo_d1["pipe"].predict_proba(model_x_var_d1),
+                        algo_d2["pipe"].predict_proba(model_x_var_d2),
+                        algo_d3["pipe"].predict_proba(model_x_var_d3)),
+                       axis =0)).transpose()
+df_prob = pd.DataFrame(prob,index = (algo_d0["pipe"].classes_ )).T
+
+df_prob.index = meteo_model[:96].index.strftime('%b %d %H:%M Z')
+
 #Show results day 0
 fig, ax = plt.subplots()
 sns.heatmap(df_prob[:24], annot=True, cmap='coolwarm',
@@ -540,9 +551,9 @@ st.pyplot(fig)
 #global results
 st.write("#### **Global results**")
 st.write("Better meteorological model outcome: {}".format(score_wrf))
-st.write(best_wrf)
+#st.write(best_wrf)
 st.write("Better machine learning outcome: {}".format(score_ml))
-st.write(best_ml)
+#st.write(best_ml)
 
 
 st.write("Project [link](https://github.com/granantuin/Coron)")
