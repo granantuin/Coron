@@ -22,7 +22,7 @@ number2 = st.empty()
 
 while True:
     random_number1 = get_random_number(10, 3)
-    random_number2 = get_random_number(240, 30)
+    random_number2 = get_random_number(240, 20)
     color1 = get_random_color()
     color2 = get_random_color()
 
