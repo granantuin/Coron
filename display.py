@@ -1,5 +1,6 @@
 import streamlit as st
 import random
+import time
 
 def get_random_number(mean, std):
     return round(random.random() * std + mean)
