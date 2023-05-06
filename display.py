@@ -1,33 +1,32 @@
 import streamlit as st
-import random
+import pandas as pd
 import time
+import numpy as np
+import random
 
-def get_random_number(mean, std):
-    return round(random.random() * std + mean)
+# Create a DataFrame with some initial values
+df = pd.DataFrame({
+    'time': pd.date_range(start='2023-05-06', freq='1H', periods=4),
+    'dir': np.full((4,), 240),
+    'dir_std': np.full((4,), 10)
+})
 
-def get_random_color():
-    letters = "0123456789ABCDEF"
-    color = "#"
-    for i in range(6):
-        color += letters[random.randint(0, 15)]
-    return color
+# Define a Streamlit app function
+def main():
+    # Add a title to the app
+    st.title("Random Numbers App")
 
-st.title("Random Numbers")
+    # Create an infinite loop to update the DataFrame and display it in real-time
+    while True:
+        # Generate random numbers for the dir_d column
+        df["dir_d"] = [round(random.random() * df.dir_std[i] + df.dir[i]) for i in range (0,4)] 
+        
+        # Display the updated DataFrame in a Streamlit table
+        st.table(df[["time",'dir_d']])
 
-st.write("Number 1: ")
-number1 = st.empty()
+        # Wait for 1 second before displaying the next set of random numbers
+        time.sleep(1)
 
-st.write("Number 2: ")
-number2 = st.empty()
-
-while True:
-    random_number1 = get_random_number(10, 3)
-    random_number2 = get_random_number(240, 20)
-    color1 = get_random_color()
-    color2 = get_random_color()
-
-    number1.write(f"<span style='color:{color1};'>{random_number1}</span>", unsafe_allow_html=True)
-    number2.write(f"<span style='color:{color2};'>{random_number2}</span>", unsafe_allow_html=True)
-
-    # Wait for 1 second before displaying the next set of random numbers
-    time.sleep(1)
+# Call the app function
+if __name__ == "__main__":
+    main()
