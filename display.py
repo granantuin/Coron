@@ -26,9 +26,6 @@ def main():
         # Clear the placeholder and display the updated DataFrame in a Streamlit table
         table_placeholder.table(df[["time",'dir_d']])
         
-        # Display the updated DataFrame in a Streamlit table
-        st.table(df[["time",'dir_d']])
-
         # Wait for 1 second before displaying the next set of random numbers
         time.sleep(1)
 
