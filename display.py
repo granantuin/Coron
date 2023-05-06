@@ -15,11 +15,16 @@ df = pd.DataFrame({
 def main():
     # Add a title to the app
     st.title("Random Numbers App")
+    # Create an empty placeholder for the table
+    table_placeholder = st.empty()
 
     # Create an infinite loop to update the DataFrame and display it in real-time
     while True:
         # Generate random numbers for the dir_d column
         df["dir_d"] = [round(random.random() * df.dir_std[i] + df.dir[i]) for i in range (0,4)] 
+        
+        # Clear the placeholder and display the updated DataFrame in a Streamlit table
+        table_placeholder.table(df[["time",'dir_d']])
         
         # Display the updated DataFrame in a Streamlit table
         st.table(df[["time",'dir_d']])
