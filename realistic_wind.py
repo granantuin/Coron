@@ -155,14 +155,14 @@ while True:
     instant, dir, des_dir,mod, des_mod = get_wind()
 
   dir_o = abs(round(np.random.normal(dir, des_dir),0))
+  spd_o =  abs(round(np.random.normal(mod, des_mod),0)) 
+  
   if dir_o> 360:
     dir_o = dir_o-360
 
   time_now = datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S") 
   next_hour = (datetime.datetime.utcnow() + timedelta(hours=1)).replace(minute=0, second=0, microsecond=0)
-
-  
-  spd_o =  abs(round(np.random.normal(mod, des_mod)*1.94384,0)) 
+   
   st.write("time GMT:",time_now,"time last mesure:",instant)
   
   #machine learning forecast
