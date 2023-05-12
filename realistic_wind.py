@@ -10,7 +10,6 @@ import sklearn
 import requests
 import json
 import time
-from IPython.display import clear_output
 import datetime
 
 
@@ -37,9 +36,6 @@ def get_wind():
   des_mod = json_data['listUltimos10min'][0]['listaMedidas'][0]['valor']*1.94384
   
   return instant, dir, des_dir,mod, des_mod
-
-instant, dir, des_dir,mod, des_mod = get_wind()
-
 
 
 def get_meteogalicia_model_4Km(coorde):
@@ -150,8 +146,9 @@ sdspd = algo_sdspd_d0["pipe"].predict(model_x_var_sdspd)
 
 
 #Show on line results
+instant, dir, des_dir,mod, des_mod = get_wind()
 while True:
-  clear_output(wait=True)
+  #clear_output(wait=True)
 
   #Actual data
   if((datetime.datetime.utcnow()-datetime.datetime.strptime(instant, '%Y-%m-%dT%H:%M:%S')).total_seconds()/60)>15:
