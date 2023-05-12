@@ -1,3 +1,4 @@
+import streamlit as st
 from lightgbm.sklearn import LGBMRegressor
 import numpy as np
 import pandas as pd
@@ -165,8 +166,7 @@ while True:
 
   
   spd_o =  abs(round(np.random.normal(mod, des_mod)*1.94384,0)) 
-  print("time GMT:",time_now,
-        "time last mesure",instant)
+  st.write("time GMT:",time_now,"time last mesure:",instant)
   
   #machine learning forecast
   dir_f = np.rint(np.random.normal(rdir, sddir))
@@ -185,6 +185,6 @@ while True:
   df_wind.at[next_hour,"dir_obs"]= dir_o
   df_wind.at[next_hour,"spd_obs"]= spd_o
   
-  print(df_wind[["dir","dir_obs","spd","spd_obs"]])
+  st.dataframe(df_wind[["dir","dir_obs","spd","spd_obs"]])
   
   time.sleep(2)
