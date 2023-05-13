@@ -147,8 +147,9 @@ sdspd = algo_sdspd_d0["pipe"].predict(model_x_var_sdspd)
 
 #Show on line results
 instant, dir, des_dir,mod, des_mod = get_wind()
+placeholder = st.empty()
 while True:
-  #clear_output(wait=True)
+  placeholder.empty()
 
   #Actual data
   if((datetime.datetime.utcnow()-datetime.datetime.strptime(instant, '%Y-%m-%dT%H:%M:%S')).total_seconds()/60)>15:
@@ -185,4 +186,4 @@ while True:
   st.dataframe(df_wind[["dir","dir_obs","spd","spd_obs"]])
   
   time.sleep(2)
-  st.experimental_rerun()
+  
