@@ -162,7 +162,7 @@ while True:
 
   time_now = datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S") 
   next_hour = (datetime.datetime.utcnow() + timedelta(hours=1)).replace(minute=0, second=0, microsecond=0)
-   
+  st.experimental_rerun() 
   st.write("time GMT:",time_now,"time last mesure:",instant)
   
   #machine learning forecast
