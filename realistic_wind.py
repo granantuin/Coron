@@ -149,7 +149,7 @@ sdspd = algo_sdspd_d0["pipe"].predict(model_x_var_sdspd)
 instant, dir, des_dir,mod, des_mod = get_wind()
 placeholder = st.empty()
 while True:
-  placeholder.empty()
+  placeholder.text("")
   #Actual data
   if((datetime.datetime.utcnow()-datetime.datetime.strptime(instant, '%Y-%m-%dT%H:%M:%S')).total_seconds()/60)>15:
     instant, dir, des_dir,mod, des_mod = get_wind()
