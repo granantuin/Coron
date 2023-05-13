@@ -182,7 +182,7 @@ while True:
   df_wind.at[next_hour,"dir_obs"]= dir_o
   df_wind.at[next_hour,"spd_obs"]= spd_o
   
-  st.dataframe(df_wind[["dir","dir_obs","spd","spd_obs"]])
+  st.dataframe(df_wind[["dir","dir_obs","spd","spd_obs"]].astype(int))
   
   time.sleep(2)
   
