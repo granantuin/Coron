@@ -186,7 +186,7 @@ while True:
   df_r = df_i.replace(next_hour,time_now)
   df_s = df_r[["dir","dir_obs","spd","spd_obs","index"]].set_index("index")
   
-  st.dataframe(df_s.loc[time_now:])
+  st.write(df_s.loc[time_now:])
   
   time.sleep(2)
   
