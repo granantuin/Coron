@@ -147,9 +147,9 @@ sdspd = algo_sdspd_d0["pipe"].predict(model_x_var_sdspd)
 
 #Show on line results
 instant, dir, des_dir,mod, des_mod = get_wind()
-placeholder = st.empty()
+
 while True:
-  placeholder.text("")
+ 
   #Actual data
   if((datetime.datetime.utcnow()-datetime.datetime.strptime(instant, '%Y-%m-%dT%H:%M:%S')).total_seconds()/60)>15:
     instant, dir, des_dir,mod, des_mod = get_wind()
@@ -163,7 +163,7 @@ while True:
   time_now = datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S") 
   next_hour = (datetime.datetime.utcnow() + timedelta(hours=1)).replace(minute=0, second=0, microsecond=0)
    
-  #st.write("time GMT:",time_now,"time last mesure:",instant)
+  st.write("time GMT:",time_now,"time last mesure:",instant)
   
   #machine learning forecast
   dir_f = np.rint(np.random.normal(rdir, sddir))
