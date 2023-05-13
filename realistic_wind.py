@@ -163,7 +163,7 @@ while True:
   time_now = datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S") 
   next_hour = (datetime.datetime.utcnow() + timedelta(hours=1)).replace(minute=0, second=0, microsecond=0)
    
-  st.write("time GMT:",time_now,"time last mesure:",instant)
+  st.write("time last mesure GMT:",instant)
   
   #machine learning forecast
   dir_f = np.rint(np.random.normal(rdir, sddir))
@@ -182,8 +182,11 @@ while True:
 
   df_wind.at[next_hour,"dir_obs"]= dir_o
   df_wind.at[next_hour,"spd_obs"]= spd_o
+  df_i = df_wind.reset_index()
+  df_r = df_i.replace(next_hour,time_now)
+  df_s = df_r[["dir","dir_obs","spd","spd_obs","index"]].set_index("index")
   
-  st.dataframe(df_wind[["dir","dir_obs","spd","spd_obs"]])
+  st.dataframe(df_s.loc[time_now:])
   
   time.sleep(2)
   
