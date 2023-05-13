@@ -177,8 +177,8 @@ while True:
                           "spd": spd_f},
                          index = meteo_model[:24].index)
   df_wind = df_wind.astype(int)
-  df_wind["dir_obs"] = "*"
-  df_wind["spd_obs"] = "*"
+  df_wind["dir_obs"] = -1
+  df_wind["spd_obs"] = -1
 
   df_wind.at[next_hour,"dir_obs"]= dir_o
   df_wind.at[next_hour,"spd_obs"]= spd_o
