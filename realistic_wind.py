@@ -176,13 +176,14 @@ while True:
   df_wind = pd.DataFrame({"dir": dir_f,
                           "spd": spd_f},
                          index = meteo_model[:24].index)
+  df_wind = df_wind.astype(int)
   df_wind["dir_obs"] = "*"
   df_wind["spd_obs"] = "*"
 
   df_wind.at[next_hour,"dir_obs"]= dir_o
   df_wind.at[next_hour,"spd_obs"]= spd_o
   
-  st.dataframe(df_wind[["dir","dir_obs","spd","spd_obs"]].astype(int))
+  st.dataframe(df_wind[["dir","dir_obs","spd","spd_obs"]])
   
   time.sleep(2)
   
