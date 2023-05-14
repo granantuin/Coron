@@ -188,5 +188,10 @@ df_wind = pd.DataFrame({"dir_f": dir_f,
                           "spd_o":spd_o},
                          index = time_now)  
 
-df_wind[['dir_f',"dir_o"]].plot(grid=True,color = ["b","g"],title="time last measure: "+str(instant));
-df_wind[['spd_f',"spd_o"]].plot(grid=True,color = ["b","g"],title="time last measure: "+str(instant));
+fig, ax = plt.subplots(figsize=(10,6))
+df_wind[['dir_f',"dir_o"]].plot(grid=True, ax=ax, color = ["b","g"],title="time last measure: "+str(instant));
+st.pyplot(fig)
+
+fig, ax = plt.subplots(figsize=(10,6))
+df_wind[['spd_f',"spd_o"]].plot(grid=True,ax=ax, color = ["b","g"],title="time last measure: "+str(instant));
+st.pyplot(fig)
