@@ -120,10 +120,10 @@ def get_meteogalicia_model_4Km(coorde):
 
 
 #load algorithm file gust
-algo_rdir_d0 = pickle.load(open("/content/drive/MyDrive/Colab Notebooks/Coron/algorithms/rdir_coron_d0.al","rb"))
-algo_sddir_d0 = pickle.load(open("/content/drive/MyDrive/Colab Notebooks/Coron/algorithms/sddir_coron_d0.al","rb"))
-algo_rspd_d0 = pickle.load(open("/content/drive/MyDrive/Colab Notebooks/Coron/algorithms/rspd_coron_d0.al","rb"))
-algo_sdspd_d0 = pickle.load(open("/content/drive/MyDrive/Colab Notebooks/Coron/algorithms/sdspd_coron_d0.al","rb"))
+algo_rdir_d0 = pickle.load(open("algorithms/rdir_coron_d0.al","rb"))
+algo_sddir_d0 = pickle.load(open("algorithms/sddir_coron_d0.al","rb"))
+algo_rspd_d0 = pickle.load(open("algorithms/rspd_coron_d0.al","rb"))
+algo_sdspd_d0 = pickle.load(open("algorithms/sdspd_coron_d0.al","rb"))
 
 
 meteo_model = get_meteogalicia_model_4Km(algo_rdir_d0["coor"])
