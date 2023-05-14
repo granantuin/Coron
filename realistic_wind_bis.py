@@ -4,7 +4,7 @@ import numpy as np
 import pandas as pd
 import pickle
 import requests
-import strealit as st
+import streamlit as st
 from datetime import timedelta
 import sklearn
 import requests
