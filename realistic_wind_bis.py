@@ -10,7 +10,6 @@ import sklearn
 import requests
 import json
 import time
-from IPython.display import clear_output
 import datetime
 
 
