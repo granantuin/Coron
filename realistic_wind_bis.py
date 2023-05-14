@@ -152,7 +152,7 @@ instant, dir, des_dir,mod, des_mod = get_wind()
 dir_o, spd_o,time_now,dir_f,spd_f = [],[],[],[],[]
 
 c=0
-total_count=20
+total_count=50
 while c<total_count:
   
   #Actual data
