@@ -3,7 +3,6 @@ import streamlit as st
 import numpy as np
 import pandas as pd
 import pickle
-import plotly.express as px
 import matplotlib.pyplot as plt
 import requests
 import json
