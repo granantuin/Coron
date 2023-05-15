@@ -116,7 +116,7 @@ def get_meteogalicia_model_4Km(coorde):
              
     return dffinal 
 
-
+st.set_page_config(page_title="Corón realistic wind forecast",layout="wide")
 
 
 #load algorithm file gust
@@ -177,7 +177,7 @@ while c<total_count:
   dir_f.append(dir_fi)
   spd_f.append(abs(np.rint(np.random.normal(rspd[next_hour.hour+1], sdspd[next_hour.hour+1])*1.94384)))
 
-  st.write(f"\rtime:",time_now[-1],"dir_f:",dir_f[-1],"dir_o:",dir_o[-1],"spd_f:",spd_f[-1],"spd_o:",spd_o[-1], end='')
+  st.write(f"\rtime:",time_now[-1],"//",dir_f:",dir_f[-1],"dir_o:",dir_o[-1],"spd_f:",spd_f[-1],"spd_o:",spd_o[-1], end='')
   c+=1
   time.sleep(2)
 
