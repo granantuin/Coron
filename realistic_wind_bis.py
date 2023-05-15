@@ -152,12 +152,12 @@ instant, dir, des_dir,mod, des_mod = get_wind()
 dir_o, spd_o,time_now,dir_f,spd_f = [],[],[],[],[]
 
 c=0
-total_count=50
+total_count= st.sidebar.number_input("intervals numbers", value=20, step=5)
 while c<total_count:
   
   #Actual data
-  if((datetime.datetime.utcnow()-datetime.datetime.strptime(instant, '%Y-%m-%dT%H:%M:%S')).total_seconds()/60)>15:
-    instant, dir, des_dir,mod, des_mod = get_wind()
+  #if((datetime.datetime.utcnow()-datetime.datetime.strptime(instant, '%Y-%m-%dT%H:%M:%S')).total_seconds()/60)>15:
+    #instant, dir, des_dir,mod, des_mod = get_wind()
 
   dir_oi = abs(np.rint(np.random.normal(dir, des_dir)))
   if dir_oi> 360:
