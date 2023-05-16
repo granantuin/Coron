@@ -171,11 +171,11 @@ while c<total_count:
     
   #machine learning forecast
 
-  dir_fi = abs(np.rint(np.random.normal(rdir[next_hour.hour+1], sddir[next_hour.hour+1])))
+  dir_fi = abs(np.rint(np.random.normal(rdir[next_hour.hour-1], sddir[next_hour.hour-1])))
   if dir_fi> 360:
     dir_fi = dir_fi-360
   dir_f.append(dir_fi)
-  spd_f.append(abs(np.rint(np.random.normal(rspd[next_hour.hour+1], sdspd[next_hour.hour+1])*1.94384)))
+  spd_f.append(abs(np.rint(np.random.normal(rspd[next_hour.hour-1], sdspd[next_hour.hour-1])*1.94384)))
 
   st.write(f"\rtime:",time_now[-1],"//","dir_f:",dir_f[-1],"dir_o:",dir_o[-1],"spd_f:",spd_f[-1],"spd_o:",spd_o[-1], end='')
   c+=1
