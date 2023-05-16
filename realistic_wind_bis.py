@@ -152,7 +152,7 @@ instant, dir, des_dir,mod, des_mod = get_wind()
 dir_o, spd_o,time_now,dir_f,spd_f = [],[],[],[],[]
 
 c=0
-total_count= st.sidebar.number_input("intervals numbers", value=20, step=5)
+total_count= st.sidebar.number_input("intervals numbers", value=15, step=5)
 while c<total_count:
   
   #Actual data
@@ -179,7 +179,7 @@ while c<total_count:
 
   st.write(f"\rtime:",time_now[-1],"//","dir_f:",dir_f[-1],"dir_o:",dir_o[-1],"spd_f:",spd_f[-1],"spd_o:",spd_o[-1], end='')
   c+=1
-  time.sleep(2)
+  time.sleep(3)
 
 
 df_wind = pd.DataFrame({"dir_f": dir_f,
