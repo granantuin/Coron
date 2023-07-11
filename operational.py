@@ -15,7 +15,7 @@ import seaborn as sns
 from lightgbm.sklearn import LGBMRegressor
 from datetime import timedelta
 import requests
-import time
+from time import sleep
 import datetime
 
 
@@ -847,7 +847,7 @@ while c<total_count:
 
   st.write(f"\rtime:",time_now[-1],"//","dir_f:",dir_f[-1],"dir_o:",dir_o[-1],"spd_f:",spd_f[-1],"spd_o:",spd_o[-1])
   c+=1
-  
+  sleep(3)
 df_wind = pd.DataFrame({"dir_f": dir_f,
                           "spd_f": spd_f,
                           "dir_o":dir_o,
