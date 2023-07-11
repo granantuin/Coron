@@ -848,7 +848,7 @@ while c<total_count:
   st.write(f"\rtime:",time_now[-1],"//","dir_f:",dir_f[-1],"dir_o:",dir_o[-1],"spd_f:",spd_f[-1],"spd_o:",spd_o[-1])
   c+=1
   for c in range(0,1000):
-    #time sleep
+    print()
 
 
 df_wind = pd.DataFrame({"dir_f": dir_f,
