@@ -824,14 +824,15 @@ dir_o, spd_o,time_now,dir_f,spd_f = [],[],[],[],[]
 c=0
 total_count= st.sidebar.number_input("intervals numbers", value=15, step=5)
 while c<total_count:
+  
   #Actual data
   #if((datetime.datetime.utcnow()-datetime.datetime.strptime(instant, '%Y-%m-%dT%H:%M:%S')).total_seconds()/60)>15:
-  #instant, dir, des_dir,mod, des_mod = get_wind()
+    #instant, dir, des_dir,mod, des_mod = get_wind()
 
   dir_oi = abs(np.rint(np.random.normal(dir, des_dir)))
   if dir_oi> 360:
     dir_oi = dir_oi-360
-    dir_o.append(dir_oi)
+  dir_o.append(dir_oi)
 
   spd_o.append(abs(round(np.random.normal(mod, des_mod),0)))
 
@@ -842,8 +843,8 @@ while c<total_count:
 
   dir_fi = abs(np.rint(np.random.normal(rdir[next_hour.hour-1], sddir[next_hour.hour-1])))
   if dir_fi> 360:
-      dir_fi = dir_fi-360
-      dir_f.append(dir_fi)
+    dir_fi = dir_fi-360
+  dir_f.append(dir_fi)
   spd_f.append(abs(np.rint(np.random.normal(rspd[next_hour.hour-1], sdspd[next_hour.hour-1])*1.94384)))
 
   st.write(f"\rtime:",time_now[-1],"//","dir_f:",dir_f[-1],"dir_o:",dir_o[-1],"spd_f:",spd_f[-1],"spd_o:",spd_o[-1])
@@ -851,17 +852,14 @@ while c<total_count:
   time.sleep(3)
 
 
-  df_wind = pd.DataFrame({"dir_f": dir_f,
-                              "spd_f": spd_f,
-                              "dir_o":dir_o,
-                              "spd_o":spd_o},
-                             index = time_now)  
+df_wind = pd.DataFrame({"dir_f": dir_f,
+                         index = time_now)  
 
-  fig, ax = plt.subplots(figsize=(10,6))
-  df_wind[['dir_f',"dir_o"]].plot(grid=True, ax=ax, color = ["b","g"],title="time last measure: "+str(instant));
-  st.pyplot(fig)
+fig, ax = plt.subplots(figsize=(10,6))
+df_wind[['dir_f',"dir_o"]].plot(grid=True, ax=ax, color = ["b","g"],title="time last measure: "+str(instant));
+st.pyplot(fig)
 
-  fig, ax = plt.subplots(figsize=(10,6))
-  df_wind[['spd_f',"spd_o"]].plot(grid=True,ax=ax, color = ["b","g"],title="time last measure: "+str(instant));
-  st.pyplot(fig)
+fig, ax = plt.subplots(figsize=(10,6))
+df_wind[['spd_f',"spd_o"]].plot(grid=True,ax=ax, color = ["b","g"],title="time last measure: "+str(instant));
+st.pyplot(fig)
 
