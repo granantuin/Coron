@@ -787,8 +787,6 @@ st.write("Better machine learning outcome: {}".format(score_ml))
 
 
 st.write("Project [link](https://github.com/granantuin/Coron)")
-
-
 #load algorithm file gust
 algo_rdir_d0 = pickle.load(open("algorithms/rdir_coron_d0.al","rb"))
 algo_sddir_d0 = pickle.load(open("algorithms/sddir_coron_d0.al","rb"))
@@ -853,6 +851,9 @@ while c<total_count:
 
 
 df_wind = pd.DataFrame({"dir_f": dir_f,
+                          "spd_f": spd_f,
+                          "dir_o":dir_o,
+                          "spd_o":spd_o},
                          index = time_now)  
 
 fig, ax = plt.subplots(figsize=(10,6))
@@ -862,4 +863,6 @@ st.pyplot(fig)
 fig, ax = plt.subplots(figsize=(10,6))
 df_wind[['spd_f',"spd_o"]].plot(grid=True,ax=ax, color = ["b","g"],title="time last measure: "+str(instant));
 st.pyplot(fig)
+
+
 
