@@ -221,7 +221,7 @@ st.pyplot(fig)
 
 #@title wind direction 
 
-"""
+
 #load algorithm file 
 algo_d0 = pickle.load(open("algorithms/dir_coron_d0.al","rb"))
 algo_d1 = pickle.load(open("algorithms/dir_coron_d1.al","rb"))
@@ -403,7 +403,7 @@ sns.heatmap(df_prob[72:96], annot=True, cmap='coolwarm',
             linewidths=.2, linecolor='black',fmt='.0%',ax=ax)
 ax.set_title("Wind direction probabilities intervals")
 st.pyplot(fig)
-"""
+
 
 #@title wind speed Beaufort
 
