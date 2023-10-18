@@ -432,10 +432,9 @@ spd_ml_d3 = algo_d2["pipe"].predict(model_x_var_d3)
 df_mod=pd.DataFrame({"time":meteo_model[:96].index,
                       "ML_spd": np.concatenate((spd_ml_d0,spd_ml_d1,spd_ml_d2,spd_ml_d3),axis=0),
                       "WRF_spd1": meteo_model.mod1})
-labels = ["F0","F1","F2","F3","F4","F5","F6","F7","F8","F9","F10","F11","F12"]
+labels = ["F0","F1","F2","F3","F4","F5","F6+"]
 interval = pd.IntervalIndex.from_tuples([(-1, 0.5), (.5, 1.5), (1.5, 3.3),(3.3,5.5),
-                                     (5.5,8),(8,10.7),(10.7,13.8),(13.8,17.1),
-                                     (17.1,20.7),(20.7,24.4),(24.4,28.4),(28.4,32.6),(32.6,60)])
+                                     (5.5,8),(8,10.7),(10.7,60)])
 
 
 
@@ -472,6 +471,8 @@ if acc_ml > acc_wrf:
   score_ml+=1
 
 #show results wind direction
+ref_met = algo_d0["score"]["acc_met"]
+ref_ml = algo_d0["score"]["acc_ml"]
 fig, ax = plt.subplots(figsize=(10,6))
 plt.plot(df_res.index, df_res['ML_spd'], marker="^", color="b",markersize=16, 
          markerfacecolor='w', linestyle='')
@@ -481,7 +482,7 @@ plt.plot(df_res.index, df_res['spd1_l'], color="r",marker="v", markersize=16,
          markerfacecolor='w', linestyle='');
 plt.grid(True)
 plt.legend(('Ml_spd', 'Observed_spd',"WRF_spd"),)
-plt.title("Wind speed mean hour before (Beaufort)\nActual accuracy meteorologic model (point 0): {:.0%}. Reference: 36%\nActual accuracy machine learning: {:.0%}. Reference: 42%".format(acc_wrf,acc_ml))            
+plt.title("Wind speed mean hour before (Beaufort)\nActual accuracy meteorologic model (point 0): {:.0%}. Reference: {:.0%}\nActual accuracy machine learning: {:.0%}. Reference: {:.0%}".format(acc_wrf,ref_met,acc_ml,ref_ml))            
 st.pyplot(fig)
 
 
@@ -492,40 +493,46 @@ plt.plot(df_mod["time"][:24], df_mod['ML_spd'][:24], marker="^", color="b",marke
 plt.plot(df_mod["time"][:24], df_mod['spd1_l'][:24], color="r",marker="v", markersize=8,
          markerfacecolor='w', linestyle='');
 plt.legend(('Ml_spd','WRF_spd'),)
-plt.title("Wind speed mean hour before day=0 (Beaufort)\nAccuracy meteorologic model (point 0): 36%\nAccuracy machine learning: 42%")
+plt.title("Wind speed mean hour before day=0 (Beaufort)\nAccuracy meteorologic model (point 0): {:.0%}\nAccuracy machine learning: {:.0%} ".format(ref_met,ref_ml))
 plt.grid(True, which = "both", axis = "both")
 st.pyplot(fig)
 
 #forecast d1
+ref_met = algo_d1["score"]["acc_met"]
+ref_ml = algo_d1["score"]["acc_ml"]
 fig, ax = plt.subplots(figsize=(10,6))
 plt.plot(df_mod["time"][24:48], df_mod['ML_spd'][24:48], marker="^", color="b",markersize=8, 
          markerfacecolor='w', linestyle='')
 plt.plot(df_mod["time"][24:48], df_mod['spd1_l'][24:48], color="r",marker="v", markersize=8,
          markerfacecolor='w', linestyle='');
 plt.legend(('Ml_spd','WRF_spd'),)
-plt.title("Wind speed mean hour before day=1 (Beaufort)\nAccuracy meteorologic model (point 0): 34%\nAccuracy machine learning: 43%")
+plt.title("Wind speed mean hour before day=1 (Beaufort)\nAccuracy meteorologic model (point 0): {:.0%}\nAccuracy machine learning: {:.0%}".format(ref_met,ref_ml))
 plt.grid(True, which = "both", axis = "both")
 st.pyplot(fig)
 
 #forecast d2
+ref_met = algo_d2["score"]["acc_met"]
+ref_ml = algo_d2["score"]["acc_ml"]
 fig, ax = plt.subplots(figsize=(10,6))
 plt.plot(df_mod["time"][48:72], df_mod['ML_spd'][48:72], marker="^", color="b",markersize=8, 
          markerfacecolor='w', linestyle='')
 plt.plot(df_mod["time"][48:72], df_mod['spd1_l'][48:72], color="r",marker="v", markersize=8,
          markerfacecolor='w', linestyle='');
 plt.legend(('Ml_spd','WRF_spd'),)
-plt.title("Wind speed mean hour before day=2 (Beaufort)\nAccuracy meteorologic model (point 0): 32%\nAccuracy machine learning: 38%")
+plt.title("Wind speed mean hour before day=2 (Beaufort)\nAccuracy meteorologic model (point 0): {:.0%}\nAccuracy machine learning: {:.0%}".format(ref_met,ref_ml))
 plt.grid(True, which = "both", axis = "both")
 st.pyplot(fig)
 
 #forecast d3
+ref_met = algo_d3["score"]["acc_met"]
+ref_ml = algo_d3["score"]["acc_ml"]
 fig, ax = plt.subplots(figsize=(10,6))
 plt.plot(df_mod["time"][72:96], df_mod['ML_spd'][72:96], marker="^", color="b",markersize=8, 
          markerfacecolor='w', linestyle='')
 plt.plot(df_mod["time"][72:96], df_mod['spd1_l'][72:96], color="r",marker="v", markersize=8,
          markerfacecolor='w', linestyle='');
 plt.legend(('Ml_spd','WRF_spd'),)
-plt.title("Wind speed mean hour before day=3 (Beaufort)\nAccuracy meteorologic model (point 0): 31%\nAccuracy machine learning: 36%")
+plt.title("Wind speed mean hour before day=3 (Beaufort)\nAccuracy meteorologic model (point 0): {:.0%}\nAccuracy machine learning: {:.0%}".format(ref_met,ref_ml))
 plt.grid(True, which = "both", axis = "both")
 st.pyplot(fig)
 
