@@ -1,5 +1,6 @@
 streamlit
 pandas==1.4.4
+lightgbm==4.0.0
 scikit-learn
 numpy==1.21.6
 streamlit-aggrid==0.2.1
