@@ -425,7 +425,7 @@ model_x_var_d3 = meteo_model[72:96][algo_d3["x_var"]]
 spd_ml_d0 = algo_d0["pipe"].predict(model_x_var_d0)
 spd_ml_d1 = algo_d1["pipe"].predict(model_x_var_d1)
 spd_ml_d2 = algo_d2["pipe"].predict(model_x_var_d2)
-spd_ml_d3 = algo_d2["pipe"].predict(model_x_var_d3)
+spd_ml_d3 = algo_d3["pipe"].predict(model_x_var_d3)
 
 
 #compare results
